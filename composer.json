@@ -1,0 +1,68 @@
+{
+    "name": "megaease/easeagent-sdk-php",
+    "type": "library",
+    "description": "A Easeagent instrumentation for PHP",
+    "keywords": [
+        "easeagent-sdk-php",
+        "zipkin",
+        "distributed-tracing",
+        "tracing",
+        "openzipkin"
+    ],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Yufu Deng",
+            "email": "observeralone@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/megaease/easeagent-sdk-php",
+    "support": {
+        "issues": "https://github.com/megaease/easeagent-sdk-php/issues"
+    },
+    "require": {
+        "openzipkin/zipkin": "^3.0.0",
+        "symfony/yaml": "^6.1"
+    },
+    "require-dev": {
+        "ext-mysqli": "*",
+        "jcchavezs/httptest": "~0.2",
+        "middlewares/fast-route": "^2.0",
+        "middlewares/request-handler": "^2.0",
+        "nyholm/psr7": "^1.4",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpstan/phpstan": "^0.12.26",
+        "phpunit/phpunit": "~9",
+        "psr/http-client": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Easeagent\\": "./src/Easeagent/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EaseagentTests\\": "./tests/"
+        }
+
+    },
+    "minimum-stability": "stable",
+    "scripts": {
+        "fix-lint": "phpcbf --standard=ZEND --standard=PSR2 --ignore=*/vendor/* ./",
+        "lint": "phpcs --standard=ZEND --standard=PSR2 --ignore=*/vendor/* ./",
+        "test": "phpunit tests",
+        "test-unit": "phpunit tests/Unit",
+        "test-integration": "phpunit tests/Integration",
+        "static-check": "phpstan analyse src --level 8"
+    },
+    "suggest": {
+        "ext-mysqli": "Allows to use mysqli instrumentation.",
+        "psr/http-client": "Allows to instrument HTTP clients following PSR18.",
+        "psr/http-server-middleware": "Allows to instrument HTTP servers via middlewares following PSR15."
+    }
+}
