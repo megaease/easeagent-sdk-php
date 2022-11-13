@@ -64,6 +64,7 @@ HttpUtils::saveInfos(
 
 // --------------------- mysql client ----------------------
 $mysqlSpan = $agent->startClientSpan($span, 'user:get_list:mysql_query');
+$childSpan->setRemoteEndpoint(\Zipkin\Endpoint::create("mysql"));
 usleep(50000);
 $mysqlSpan->finish();
 ```
