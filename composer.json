@@ -21,6 +21,8 @@
         "issues": "https://github.com/megaease/easeagent-sdk-php/issues"
     },
     "require": {
+        "php": "^7.4 || ^8.0",
+        "ext-curl": "*",
         "openzipkin/zipkin": "^3.0.0",
         "symfony/yaml": "^6.1"
     },
