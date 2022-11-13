@@ -28,34 +28,34 @@ class Spec
             // echo "key: ".$key." value: ".$val;
             switch ($key) {
                 case "service_name":
-                    $spec->serviceName = $val;
+                    $spec->serviceName = $val == null ? "zone.damoin.service" : $val;
                     break;
                 case "tracing_type":
-                    $spec->tracingType = $val;
+                    $spec->tracingType = $val == null ? "log-tracing" : $val;
                     break;
                 case "tracing.enable":
-                    $spec->tracingEnable = $val;
+                    $spec->tracingEnable = $val == null ? true : $val;
                     break;
                 case "tracing.sample.rate":
-                    $spec->sampleRate = $val;
+                    $spec->sampleRate =  $val == null ? 1.0 : $val;
                     break;
                 case "tracing.shared.spans":
-                    $spec->sharedSpans = $val;
+                    $spec->sharedSpans =  $val == null ? true : $val;
                     break;
                 case "tracing.id128bit":
-                    $spec->id128bit = $val;
+                    $spec->id128bit =  $val == null ? false : $val;
                     break;
                 case "reporter.output.server":
-                    $spec->outputServerUrl = $val;
+                    $spec->outputServerUrl =  $val == null ? "http://localhost:9411/api/v2/spans" : $val;
                     break;
                 case "reporter.output.server.tls.enable":
-                    $spec->enableTls = $val;
+                    $spec->enableTls = $val == null ? false : $val;
                     break;
                 case "reporter.output.server.tls.key":
-                    $spec->tlsKey = $val;
+                    $spec->tlsKey = $val == null ? "" : $val;
                     break;
                 case "reporter.output.server.tls.cert":
-                    $spec->tlsCert = $val;
+                    $spec->tlsCert = $val == null ? "" : $val;
                     break;
                 default:
                     break;

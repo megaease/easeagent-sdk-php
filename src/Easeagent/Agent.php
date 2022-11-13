@@ -17,8 +17,6 @@ const TRACING_HTTP_TAG_SCRIPT_FILENAME = "http.script.filename";
 const TRACING_HTTP_TAG_STATUS_CODE = "http.status_code";
 const TRACING_HTTP_TAG_CLIENT_ADDRESS = "Client Address";
 
-
-
 class Agent
 {
 
@@ -58,17 +56,16 @@ class Agent
 
     public function startServerSpan(string $name): Span
     {
-        // $carrier =  getallheaders();
-
         /* Extracts the context from the HTTP headers */
         $extractor = $this->tracing->getPropagation()->getExtractor(new Map());
         $extractedContext = $extractor(getallheaders());
+        
         $tracer = $this->tracing->getTracer();
         if ($extractedContext->isEmpty()) {
             $extractedContext = DefaultSamplingFlags::createAsSampled();
             $span = $tracer->newTrace($extractedContext);
         } else {
-            $span = $tracer->nextSpan($extractedContext);
+            $span = $tracer->joinSpan($extractedContext);
         }
         $span->start();
         $span->setKind(\Zipkin\Kind\SERVER);

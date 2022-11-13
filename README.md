@@ -11,19 +11,8 @@ $ composer require megaease/easeagent-sdk-php
 
 ## Usage
 ### First: Configuration
-create a yaml file config for your server like this: `agent.yaml`
-```yml
-service_name: {YOUR_SERVCIE_NAME:demo.demo.sdk-php-frontend-service}
-tracing_type: {TYPE_OF_TRACING:log-tracing}
-tracing.enable: true
-tracing.sample.rate: 1.0
-tracing.shared.spans: true
-tracing.id128bit: false
-reporter.output.server: {MEGA_CLOUD_URL:"https://127.0.0.1:/report/application-tracing-log"}
-reporter.output.server.tls.enable: true
-reporter.output.server.tls.key: "YOUR_TLS_KEY"
-reporter.output.server.tls.cert: "YOUR_TLS_CERT"
-```
+create a yaml file config for your server like this: [agent.yml](./agent.yml)
+
 If you are using `MegaCloud`. Please download the agent.yaml on the front end. `YOUR_SERVCIE_NAME`,`TYPE_OF_TRACING`,`MEGA_CLOUD_URL` and `TLS` will be filled in for you automatically.
 
 ### Second: Init Agent
@@ -31,6 +20,7 @@ If you are using `MegaCloud`. Please download the agent.yaml on the front end. `
 ##### 1. use class
 ```php
 use Easeagent\AgentBuilder;
+use Easeagent\HTTP\HttpUtils;
 use Zipkin\Timestamp;
 ```
 
@@ -63,7 +53,14 @@ $request = new \GuzzleHttp\Psr7\Request('POST', 'localhost:9000', $headers);
 $childSpan->annotate('request_started', Timestamp\now());
 $response = $httpClient->send($request);
 $childSpan->annotate('request_finished', Timestamp\now());
-$childSpan->finish();
+
+/* Save Request info */
+HttpUtils::saveInfos(
+    $childSpan,
+    $request->getMethod(),
+    $request->getUri()->getPath(),
+    $response->getStatusCode()
+)->finish();
 
 // --------------------- mysql client ----------------------
 $mysqlSpan = $agent->startClientSpan($span, 'user:get_list:mysql_query');
