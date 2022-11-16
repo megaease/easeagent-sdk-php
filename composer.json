@@ -45,7 +45,12 @@
     "autoload": {
         "psr-4": {
             "Easeagent\\": "./src/Easeagent/"
-        }
+        },
+        "files": [
+            "./src/Easeagent/Constant/Constant.php",
+            "./src/Easeagent/Middleware/Type.php"
+        ]
+
     },
     "autoload-dev": {
         "psr-4": {

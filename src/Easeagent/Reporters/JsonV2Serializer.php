@@ -95,7 +95,8 @@ class JsonV2Serializer implements SpanSerializer
             $spanStr .= ',"kind":"' . $span->getKind() . '"';
         }
 
-        if (null !== ($remoteEndpoint = $span->getRemoteEndpoint())) {
+
+        if (null !== ($remoteEndpoint = self::getRemoteEndpoint($span))) {
             $spanStr .= ',"remoteEndpoint":' . self::serializeEndpoint($remoteEndpoint);
         }
 
@@ -136,5 +137,22 @@ class JsonV2Serializer implements SpanSerializer
         $spanStr .= ', "service":"' . $this->serviceName . '"';
         $spanStr .= ',"type": "' . $this->tracingType . '"';
         return $spanStr . '}';
+    }
+
+    private function getRemoteEndpoint(ReadbackSpan $span): ?Endpoint
+    {
+        $tags = $span->getTags();
+        if (empty($tags) || !isset($tags["component.type"])) {
+            return $span->getRemoteEndpoint();
+        }
+        $middlewareType = $tags[\Easeagent\Middleware\TAG];
+        $endpoint = $span->getRemoteEndpoint();
+        if (null === $endpoint) {
+            return Endpoint::create($middlewareType);
+        }
+        if (null === $endpoint->getServiceName() || "" === $endpoint->getServiceName()) {
+            return $endpoint->withServiceName($middlewareType);
+        }
+        return $endpoint;
     }
 }

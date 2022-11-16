@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace Easeagent;
 
+use Easeagent\Middleware\Type;
 use Zipkin\Span;
 use Zipkin\Tracing;
 use Zipkin\Propagation\Map;
 use Zipkin\Propagation\DefaultSamplingFlags;
 use Exception;
-
-const TRACING_ATTRIBUTE_ROUTE = "http.route";
-const TRACING_HTTP_TAG_METHOD = "http.method";
-const TRACING_HTTP_TAG_PATH = "http.path";
-const TRACING_HTTP_TAG_SCRIPT_FILENAME = "http.script.filename";
-const TRACING_HTTP_TAG_STATUS_CODE = "http.status_code";
-const TRACING_HTTP_TAG_CLIENT_ADDRESS = "Client Address";
 
 class Agent
 {
@@ -59,7 +53,7 @@ class Agent
         /* Extracts the context from the HTTP headers */
         $extractor = $this->tracing->getPropagation()->getExtractor(new Map());
         $extractedContext = $extractor(getallheaders());
-        
+
         $tracer = $this->tracing->getTracer();
         if ($extractedContext->isEmpty()) {
             $extractedContext = DefaultSamplingFlags::createAsSampled();
@@ -70,11 +64,11 @@ class Agent
         $span->start();
         $span->setKind(\Zipkin\Kind\SERVER);
         $span->setName($name);
-        $span->tag(TRACING_HTTP_TAG_METHOD, strtoupper($_SERVER['REQUEST_METHOD']));
-        $span->tag(TRACING_HTTP_TAG_PATH, $_SERVER['REQUEST_URI']);
-        $span->tag(TRACING_ATTRIBUTE_ROUTE, strtoupper($_SERVER['REQUEST_METHOD']) . " " . $_SERVER['REQUEST_URI']);
-        $span->tag(TRACING_HTTP_TAG_CLIENT_ADDRESS, $_SERVER['REMOTE_ADDR'] . ":" . $_SERVER['REMOTE_PORT']);
-        $span->tag(TRACING_HTTP_TAG_SCRIPT_FILENAME, $_SERVER['SCRIPT_FILENAME']);
+        $span->tag(\Easeagent\Constant\HTTP_TAG_METHOD, strtoupper($_SERVER['REQUEST_METHOD']));
+        $span->tag(\Easeagent\Constant\HTTP_TAG_PATH, $_SERVER['REQUEST_URI']);
+        $span->tag(\Easeagent\Constant\HTTP_TAG_ATTRIBUTE_ROUTE, strtoupper($_SERVER['REQUEST_METHOD']) . " " . $_SERVER['REQUEST_URI']);
+        $span->tag(\Easeagent\Constant\HTTP_TAG_CLIENT_ADDRESS, $_SERVER['REMOTE_ADDR'] . ":" . $_SERVER['REMOTE_PORT']);
+        $span->tag(\Easeagent\Constant\HTTP_TAG_SCRIPT_FILENAME, $_SERVER['SCRIPT_FILENAME']);
         return $span;
     }
 
@@ -86,6 +80,13 @@ class Agent
         $childSpan->setKind(\Zipkin\Kind\CLIENT);
         $childSpan->setName($name);
         return $childSpan;
+    }
+
+    public function startMiddlewareSpan(Span $parent, string $name, Type $type): Span
+    {
+        $span = $this->startClientSpan($parent, $name);
+        $span->tag(\Easeagent\Middleware\TAG, $type->value());
+        return $span;
     }
 
     public function injectorHeaders(Span $span): array
