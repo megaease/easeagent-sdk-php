@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace Easeagent\HTTP;
 
+use Easeagent\Agent;
 use Zipkin\Span;
 
 final class HttpUtils
 {
+
+    public static function finishSpan(Span $span, string $method, string $path, int $statusCode)
+    {
+        self::saveInfos($span, $method, $path, $statusCode);
+    }
     public static function saveInfos(Span $span, string $method, string $path, int $statusCode): Span
     {
         $span->setName($method);

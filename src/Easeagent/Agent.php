@@ -56,7 +56,7 @@ class Agent
 
         $tracer = $this->tracing->getTracer();
         if ($extractedContext->isEmpty()) {
-            $extractedContext = DefaultSamplingFlags::createAsSampled();
+            $extractedContext = DefaultSamplingFlags::createAsEmpty();
             $span = $tracer->newTrace($extractedContext);
         } else {
             $span = $tracer->joinSpan($extractedContext);

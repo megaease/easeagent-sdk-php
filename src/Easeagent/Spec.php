@@ -24,32 +24,43 @@ class Spec
     {
         $yaml = Yaml::parse(file_get_contents($yamlPath), Yaml::PARSE_OBJECT_FOR_MAP);
         $spec = new Spec;
+        $spec->serviceName = "zone.damoin.service";
+        $spec->tracingType = "log-tracing";
+        $spec->tracingEnable = true;
+        $spec->sampleRate = 1.0;
+        $spec->sharedSpans = true;
+        $spec->id128bit = false;
+        $spec->outputServerUrl = "http://localhost:9411/api/v2/spans";
+        $spec->enableTls = false;
+        $spec->tlsKey = "";
+        $spec->tlsCert = "";
+
         foreach ($yaml as $key => $val) {
             // echo "key: ".$key." value: ".$val;
             switch ($key) {
                 case "service_name":
-                    $spec->serviceName = $val == null ? "zone.damoin.service" : $val;
+                    $spec->serviceName = $val == null ? "" : $val;
                     break;
                 case "tracing_type":
-                    $spec->tracingType = $val == null ? "log-tracing" : $val;
+                    $spec->tracingType = $val == null ? "" : $val;
                     break;
                 case "tracing.enable":
-                    $spec->tracingEnable = $val == null ? true : $val;
+                    $spec->tracingEnable = $val;
                     break;
                 case "tracing.sample.rate":
-                    $spec->sampleRate =  $val == null ? 1.0 : $val;
+                    $spec->sampleRate =  $val;
                     break;
                 case "tracing.shared.spans":
-                    $spec->sharedSpans =  $val == null ? true : $val;
+                    $spec->sharedSpans =  $val;
                     break;
                 case "tracing.id128bit":
-                    $spec->id128bit =  $val == null ? false : $val;
+                    $spec->id128bit =  $val;
                     break;
                 case "reporter.output.server":
-                    $spec->outputServerUrl =  $val == null ? "http://localhost:9411/api/v2/spans" : $val;
+                    $spec->outputServerUrl = $val == null ? "" : $val;
                     break;
                 case "reporter.output.server.tls.enable":
-                    $spec->enableTls = $val == null ? false : $val;
+                    $spec->enableTls = $val;
                     break;
                 case "reporter.output.server.tls.key":
                     $spec->tlsKey = $val == null ? "" : $val;
