@@ -27,7 +27,7 @@ use Zipkin\Timestamp;
 ##### 2. Init Agent
 You can load spec then new Agent like below code:
 ```php
-$agent = AgentBuilder::buildFromYaml("./agent.yml");
+$agent = AgentBuilder::buildFromYaml(getenv('EASEAGENT_SDK_CONFIG_FILE'));
 ```
 
 ### Third: use server transaction and client span
@@ -54,13 +54,8 @@ $childSpan->annotate('request_started', Timestamp\now());
 $response = $httpClient->send($request);
 $childSpan->annotate('request_finished', Timestamp\now());
 
-/* Save Request info */
-HttpUtils::saveInfos(
-    $childSpan,
-    $request->getMethod(),
-    $request->getUri()->getPath(),
-    $response->getStatusCode()
-)->finish();
+/* Save Request info and finish span */
+HttpUtils::finishSpan($childSpan, $request->getMethod(), $request->getUri()->getPath(), $response->getStatusCode());
 
 // --------------------- mysql client ----------------------
 $mysqlSpan = $agent->startClientSpan($span, 'user:get_list:mysql_query');

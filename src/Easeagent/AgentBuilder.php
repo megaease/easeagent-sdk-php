@@ -10,6 +10,7 @@ use Zipkin\Endpoint;
 use Easeagent\Reporters\JsonV2Serializer;
 use Easeagent\Reporters\Http\CurlFactory;
 use Zipkin\Reporters\Http;
+use Zipkin\Reporters\Log;
 use Zipkin\Samplers\BinarySampler;
 
 class AgentBuilder
@@ -56,7 +57,16 @@ class AgentBuilder
             'tls_key' => $this->spec->tlsKey,
             'tls_cert' => $this->spec->tlsCert
         ];
-        $reporter = new Http($configs, CurlFactory::create(), null, new JsonV2Serializer($this->spec->serviceName, $this->spec->tracingType));
+        $logger = new \Monolog\Logger('log');
+        $logger->pushHandler(new \Monolog\Handler\ErrorLogHandler());
+        $serializer  = new JsonV2Serializer($this->spec->serviceName, $this->spec->tracingType);
+        $reporter = null;
+        if ($this->spec->outputServerUrl == "") {
+            $reporter = new Log($logger, $serializer);
+        } else {
+            $reporter = new Http($configs, CurlFactory::create(), $logger, $serializer);
+        }
+
         $sampler = null;
         if ($this->spec->tracingEnable) {
             $sampler = PercentageSampler::create($this->spec->sampleRate);
@@ -73,7 +83,7 @@ class AgentBuilder
         return new Agent($tracing, $sampler);
     }
 
-    public static function buildFromYaml($configPath): Agent
+    public static function buildFromYaml(string $configPath): Agent
     {
         $agentBuilder = new AgentBuilder;
         $agentBuilder->havingSpec(Spec::loadFromYaml($configPath));

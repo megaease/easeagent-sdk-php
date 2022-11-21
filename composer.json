@@ -23,6 +23,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-curl": "*",
+        "monolog/monolog": "^1.23",
         "openzipkin/zipkin": "^3.0.0",
         "symfony/yaml": "^6.1"
     },

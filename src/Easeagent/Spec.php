@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Easeagent;
 
+use Exception;
 use Symfony\Component\Yaml\Yaml;
+use Throwable;
 
 class Spec
 {
@@ -20,9 +22,8 @@ class Spec
     public bool $sharedSpans;
     public bool $id128bit;
 
-    public static function loadFromYaml(string $yamlPath): Spec
+    public static function new(): Spec
     {
-        $yaml = Yaml::parse(file_get_contents($yamlPath), Yaml::PARSE_OBJECT_FOR_MAP);
         $spec = new Spec;
         $spec->serviceName = "zone.damoin.service";
         $spec->tracingType = "log-tracing";
@@ -30,10 +31,24 @@ class Spec
         $spec->sampleRate = 1.0;
         $spec->sharedSpans = true;
         $spec->id128bit = false;
-        $spec->outputServerUrl = "http://localhost:9411/api/v2/spans";
+        $spec->outputServerUrl = "";
         $spec->enableTls = false;
         $spec->tlsKey = "";
         $spec->tlsCert = "";
+        return $spec;
+    }
+
+    public static function loadFromYaml(string $yamlPath): Spec
+    {
+        $spec = self::new();
+        if (!file_exists($yamlPath)) {
+            return $spec;
+        }
+        try {
+            $yaml = Yaml::parse(file_get_contents($yamlPath), Yaml::PARSE_OBJECT_FOR_MAP);
+        } catch (Throwable $e) {
+            return $spec;
+        }
 
         foreach ($yaml as $key => $val) {
             // echo "key: ".$key." value: ".$val;
