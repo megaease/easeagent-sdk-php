@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Easeagent;
 
+use Easeagent\HTTP\HttpUtils;
 use Easeagent\Middleware\Type;
 use Zipkin\Span;
 use Zipkin\Tracing;
@@ -11,10 +12,21 @@ use Zipkin\Propagation\Map;
 use Zipkin\Propagation\DefaultSamplingFlags;
 use Exception;
 
+if (!function_exists('getallheaders')) {
+    function getallheaders()
+    {
+        $headers = [];
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+            }
+        }
+        return $headers;
+    }
+}
+
 class Agent
 {
-
-
     private Tracing $tracing;
     public function __construct(Tracing $tracing)
     {
@@ -37,7 +49,7 @@ class Agent
 
     public function serverTransaction(callable $callback)
     {
-        $span = $this->startServerSpan($_SERVER['REQUEST_METHOD']);
+        $span = $this->startServerSpan(HttpUtils::getServerPar(\Easeagent\HTTP\REQUEST_METHOD, \Easeagent\Constant\UNKNOWN));
         try {
             return $callback($span);
         } catch (Exception $e) {
@@ -64,11 +76,7 @@ class Agent
         $span->start();
         $span->setKind(\Zipkin\Kind\SERVER);
         $span->setName($name);
-        $span->tag(\Easeagent\Constant\HTTP_TAG_METHOD, strtoupper($_SERVER['REQUEST_METHOD']));
-        $span->tag(\Easeagent\Constant\HTTP_TAG_PATH, $_SERVER['REQUEST_URI']);
-        $span->tag(\Easeagent\Constant\HTTP_TAG_ATTRIBUTE_ROUTE, strtoupper($_SERVER['REQUEST_METHOD']) . " " . $_SERVER['REQUEST_URI']);
-        $span->tag(\Easeagent\Constant\HTTP_TAG_CLIENT_ADDRESS, $_SERVER['REMOTE_ADDR'] . ":" . $_SERVER['REMOTE_PORT']);
-        $span->tag(\Easeagent\Constant\HTTP_TAG_SCRIPT_FILENAME, $_SERVER['SCRIPT_FILENAME']);
+        HttpUtils::saveHttpServerInfos($span);
         return $span;
     }
 

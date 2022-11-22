@@ -25,3 +25,4 @@
 /vendors/*
 .history/*
 composer.lock
+.phpunit.result.cache

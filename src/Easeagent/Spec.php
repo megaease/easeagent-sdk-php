@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Easeagent;
 
-use Exception;
 use Symfony\Component\Yaml\Yaml;
 use Throwable;
+
+use  Easeagent\Log\Log;
 
 class Spec
 {
@@ -31,7 +32,7 @@ class Spec
         $spec->sampleRate = 1.0;
         $spec->sharedSpans = true;
         $spec->id128bit = false;
-        $spec->outputServerUrl = "";
+        $spec->outputServerUrl = "";  // empty output is logger span json
         $spec->enableTls = false;
         $spec->tlsKey = "";
         $spec->tlsCert = "";
@@ -40,6 +41,7 @@ class Spec
 
     public static function loadFromYaml(string $yamlPath): Spec
     {
+        $logger = Log::getLogger();
         $spec = self::new();
         if (!file_exists($yamlPath)) {
             return $spec;
@@ -47,6 +49,7 @@ class Spec
         try {
             $yaml = Yaml::parse(file_get_contents($yamlPath), Yaml::PARSE_OBJECT_FOR_MAP);
         } catch (Throwable $e) {
+            $logger->addError("load yaml file error: " . $e->getMessage());
             return $spec;
         }
 

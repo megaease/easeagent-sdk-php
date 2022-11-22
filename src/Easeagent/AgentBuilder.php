@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Easeagent;
 
+use Easeagent\HTTP\HttpUtils;
 use Zipkin\TracingBuilder;
 use Zipkin\Samplers\PercentageSampler;
 use Zipkin\Endpoint;
@@ -21,8 +22,8 @@ class AgentBuilder
 
     public function __construct()
     {
-        $this->localServiceIPv4 = $_SERVER['SERVER_NAME'];
-        $this->localServicePort = intval($_SERVER['SERVER_PORT']);
+        $this->localServiceIPv4 = HttpUtils::getServerPar(\Easeagent\HTTP\SERVER_NAME);
+        $this->localServicePort = HttpUtils::getServerParAsInt(\Easeagent\HTTP\SERVER_PORT);
     }
     public static function create(): self
     {
@@ -57,14 +58,12 @@ class AgentBuilder
             'tls_key' => $this->spec->tlsKey,
             'tls_cert' => $this->spec->tlsCert
         ];
-        $logger = new \Monolog\Logger('log');
-        $logger->pushHandler(new \Monolog\Handler\ErrorLogHandler());
         $serializer  = new JsonV2Serializer($this->spec->serviceName, $this->spec->tracingType);
         $reporter = null;
         if ($this->spec->outputServerUrl == "") {
-            $reporter = new Log($logger, $serializer);
+            $reporter = new Log(\Easeagent\Log\Log::getLogger(), $serializer);
         } else {
-            $reporter = new Http($configs, CurlFactory::create(), $logger, $serializer);
+            $reporter = new Http($configs, CurlFactory::create(), \Easeagent\Log\Log::getLogger(), $serializer);
         }
 
         $sampler = null;

@@ -49,15 +49,20 @@
         },
         "files": [
             "./src/Easeagent/Constant/Constant.php",
-            "./src/Easeagent/Middleware/Type.php"
+            "./src/Easeagent/Middleware/Type.php",
+            "./src/Easeagent/Log/Log.php"
+            
         ]
-
     },
     "autoload-dev": {
         "psr-4": {
             "EaseagentTests\\": "./tests/"
-        }
-
+        },
+        "files": [
+            "./src/Easeagent/Constant/Constant.php",
+            "./src/Easeagent/Middleware/Type.php",
+            "./src/Easeagent/Log/Log.php"
+        ]
     },
     "minimum-stability": "stable",
     "scripts": {
@@ -65,7 +70,6 @@
         "lint": "phpcs --standard=ZEND --standard=PSR2 --ignore=*/vendor/* ./",
         "test": "phpunit tests",
         "test-unit": "phpunit tests/Unit",
-        "test-integration": "phpunit tests/Integration",
         "static-check": "phpstan analyse src --level 8"
     },
     "suggest": {

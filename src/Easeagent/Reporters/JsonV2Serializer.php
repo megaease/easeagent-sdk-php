@@ -31,7 +31,6 @@ class JsonV2Serializer implements SpanSerializer
         $spansAsArray = array_map([self::class, 'serializeSpan'], $spans);
 
         $result = '[' . implode(',', $spansAsArray) . ']';
-        // echo $result;
         return $result;
     }
 
@@ -134,7 +133,7 @@ class JsonV2Serializer implements SpanSerializer
             }
             $spanStr .= '}';
         }
-        $spanStr .= ', "service":"' . $this->serviceName . '"';
+        $spanStr .= ',"service":"' . $this->serviceName . '"';
         $spanStr .= ',"type": "' . $this->tracingType . '"';
         return $spanStr . '}';
     }
@@ -142,7 +141,7 @@ class JsonV2Serializer implements SpanSerializer
     private function getRemoteEndpoint(ReadbackSpan $span): ?Endpoint
     {
         $tags = $span->getTags();
-        if (empty($tags) || !isset($tags["component.type"])) {
+        if (empty($tags) || !isset($tags[\Easeagent\Middleware\TAG])) {
             return $span->getRemoteEndpoint();
         }
         $middlewareType = $tags[\Easeagent\Middleware\TAG];
