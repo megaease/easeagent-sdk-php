@@ -48,6 +48,7 @@
             "Easeagent\\": "./src/Easeagent/"
         },
         "files": [
+            "./src/Easeagent/Http/HttpUtils.php",
             "./src/Easeagent/Constant/Constant.php",
             "./src/Easeagent/Middleware/Type.php",
             "./src/Easeagent/Log/Log.php"
@@ -59,6 +60,7 @@
             "EaseagentTests\\": "./tests/"
         },
         "files": [
+            "./src/Easeagent/Http/HttpUtils.php",
             "./src/Easeagent/Constant/Constant.php",
             "./src/Easeagent/Middleware/Type.php",
             "./src/Easeagent/Log/Log.php"

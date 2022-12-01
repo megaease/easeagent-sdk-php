@@ -53,6 +53,8 @@ class Spec
             return $spec;
         }
 
+        $logger->info("load spec from yaml: ".$yamlPath);
+
         foreach ($yaml as $key => $val) {
             // echo "key: ".$key." value: ".$val;
             switch ($key) {
