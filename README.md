@@ -1,5 +1,18 @@
 # easeagent-sdk-go
 
+- [easeagent-sdk-go](#easeagent-sdk-go)
+  - [Overview](#overview)
+    - [Principles](#principles)
+  - [Features](#features)
+  - [QuickStart](#quickstart)
+    - [1. Installing via Composer](#1-installing-via-composer)
+    - [2. Use](#2-use)
+    - [3. Init Agent](#3-init-agent)
+    - [4. Transaction php](#4-transaction-php)
+  - [Example](#example)
+  - [About MegaCloud](#about-megacloud)
+
+
 A lightweight & opening PHP SDK for Cloud-Native and APM system
 ## Overview
 
@@ -58,4 +71,4 @@ Obs. for a more complete router/frontend/backend example, check [this repository
 ## About MegaCloud 
 1. [Use SDK in MegaCloud](./doc/how-to-use.md)
 2. Get MegaCloud Config. [About MegaCloud Config](./doc/megacloud-config.md)
-3. [Decorate the Span](./doc/middleware-span.md). please use api: `Agent.startMiddlewareSpan` for Decorate Span.
+3. [Decorate the Span](./doc/middleware-span.md). please use api: `Agent.startMiddlewareSpan` for decorate Span.
