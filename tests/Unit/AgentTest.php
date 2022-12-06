@@ -14,7 +14,7 @@ final class AgentTest extends TestCase
         $builder = new AgentBuilder();
         $agent = $builder->havingSpec(Spec::new())->build();
         self::assertNotNull($agent);
-        $agent->serverTransaction(function ($span) use ($agent) {
+        $agent->serverReceive(function ($span) use ($agent) {
             self::assertNotNull($span);
             $context = $span->getContext();
             self::assertNull($context->getParentId());

@@ -34,7 +34,7 @@ $agent = AgentBuilder::buildFromYaml(getenv('EASEAGENT_SDK_CONFIG_FILE'));
 
 ##### 1. Server Transaction
 ```php
-$agent->serverTransaction(function ($span) use ($agent){
+$agent->serverReceive(function ($span) use ($agent){
     //do your business
     usleep(50000);
 });

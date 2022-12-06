@@ -37,17 +37,31 @@ class Agent
         });
     }
 
+    /**
+     * get zipkin Tracing Object.
+     *
+     * @return Tracing
+     */
     public function getTracing(): Tracing
     {
         return $this->tracing;
     }
 
+
+    /**
+     * Calling this will flush any pending spans to the transport.
+     * use zipkin tracer
+     */
     public function flush()
     {
         $this->tracing->getTracer()->flush();
     }
 
-    public function serverTransaction(callable $callback)
+    /**
+     * Obtain key:value from the request passed by a parent server and create a Span. Then call callable. 
+     * @param $callback php server service call.
+     */
+    public function serverReceive(callable $callback)
     {
         $span = $this->startServerSpan(HttpUtils::getServerPar(\Easeagent\HTTP\REQUEST_METHOD, \Easeagent\Constant\UNKNOWN));
         try {
@@ -60,6 +74,10 @@ class Agent
         }
     }
 
+    /**
+     * Obtain key:value from the request passed by a parent server and create a Span.
+     * @return Span
+     */
     public function startServerSpan(string $name): Span
     {
         /* Extracts the context from the HTTP headers */
@@ -80,6 +98,12 @@ class Agent
         return $span;
     }
 
+    /**
+     * Creates a client span within an existing trace. 
+     * @param Span $parent parent Span.
+     * @param string $name child name of span.
+     * @return Span
+     */
     public function startClientSpan(Span $parent, string $name): Span
     {
         $tracer = $this->tracing->getTracer();
@@ -90,6 +114,14 @@ class Agent
         return $childSpan;
     }
 
+    /**
+     * Creates a middleware span within an existing trace. It is a \Zipkin\Kind\CLIENT kind Span.
+     * It tag component.type for Decorate Span.
+     * @param Span $parent parent Span.
+     * @param string $name child name of span.
+     * @param Type $type Middleware type, details: https://github.com/megaease/easeagent-sdk-php/blob/main/doc/middleware-span.md.
+     * @return Span
+     */
     public function startMiddlewareSpan(Span $parent, string $name, Type $type): Span
     {
         $span = $this->startClientSpan($parent, $name);
@@ -97,6 +129,11 @@ class Agent
         return $span;
     }
 
+    /**
+     * Injects the Span Context into array and return
+     * @param Span $span
+     * @return array span id header.
+     */
     public function injectorHeaders(Span $span): array
     {
         $headers = [];

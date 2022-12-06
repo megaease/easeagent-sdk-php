@@ -82,6 +82,10 @@ class AgentBuilder
         return new Agent($tracing, $sampler);
     }
 
+    /**
+     * build a Agent from a config file.
+     * @return Agent
+     */
     public static function buildFromYaml(string $configPath): Agent
     {
         $agentBuilder = new AgentBuilder;

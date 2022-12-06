@@ -8,9 +8,12 @@
     - [1. Installing via Composer](#1-installing-via-composer)
     - [2. Use](#2-use)
     - [3. Init Agent](#3-init-agent)
-    - [4. Transaction php](#4-transaction-php)
+    - [4. Server Span](#4-server-span)
+  - [Documentation](#documentation)
   - [Example](#example)
   - [About MegaCloud](#about-megacloud)
+  - [Community](#community)
+  - [Licenses](#licenses)
 
 
 A lightweight & opening PHP SDK for Cloud-Native and APM system
@@ -58,13 +61,14 @@ use Easeagent\AgentBuilder;
 $agent = AgentBuilder::buildFromYaml('');//by default: Console Reporter
 ```
 
-### 4. Transaction php
+### 4. Server Span
 ```php
-$agent->serverTransaction(function ($span) use ($agent) {
+$agent->serverReceive(function ($span) use ($agent) {
     echo "<p>Welcome to PHP</p>";
 });
 ```
-
+## Documentation
+[APM Tracing API](./doc/tracing-api.md)
 ## Example
 Obs. for a more complete router/frontend/backend example, check [this repository](https://github.com/megaease/easeagent-sdk-php-example)
 
@@ -72,3 +76,15 @@ Obs. for a more complete router/frontend/backend example, check [this repository
 1. [Use SDK in MegaCloud](./doc/how-to-use.md)
 2. Get MegaCloud Config. [About MegaCloud Config](./doc/megacloud-config.md)
 3. [Decorate the Span](./doc/middleware-span.md). please use api: `Agent.startMiddlewareSpan` for decorate Span.
+
+## Community
+
+* [Github Issues](https://github.com/megaease/easeagent-sdk-php/issues)
+* [Join Slack Workspace](https://join.slack.com/t/openmegaease/shared_invite/zt-upo7v306-lYPHvVwKnvwlqR0Zl2vveA) for requirement, issue and development.
+* [MegaEase on Twitter](https://twitter.com/megaease)
+
+If you have any questions, welcome to discuss them in our community. Welcome to join!
+
+
+## Licenses
+EaseAgent PHP SDK is licensed under the Apache License, Version 2.0. See [LICENSE](./LICENSE) for the full license text.
