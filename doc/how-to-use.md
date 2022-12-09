@@ -13,7 +13,7 @@ $ composer require megaease/easeagent-sdk-php
 ### First: Configuration
 create a yaml file config for your server like this: [agent.yml](./agent.yml)
 
-If you are using `MegaCloud`. Please download the agent.yaml on the front end. `YOUR_SERVCIE_NAME`,`TYPE_OF_TRACING`,`MEGA_CLOUD_URL` and `TLS` will be filled in for you automatically.
+If you are using `MegaEase Cloud`. Please download the agent.yaml on the front end. `YOUR_SERVCIE_NAME`,`TYPE_OF_TRACING`,`MEGA_CLOUD_URL` and `TLS` will be filled in for you automatically.
 
 ### Second: Init Agent
 
@@ -27,7 +27,7 @@ use Zipkin\Timestamp;
 ##### 2. Init Agent
 You can load spec then new Agent like below code:
 ```php
-$agent = AgentBuilder::buildFromYaml(getenv('EASEAGENT_SDK_CONFIG_FILE'));
+$agent = AgentBuilder::buildFromYaml(getenv('EASEAGENT_CONFIG'));
 ```
 
 ### Third: use server transaction and client span

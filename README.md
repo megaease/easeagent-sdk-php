@@ -1,6 +1,6 @@
-# easeagent-sdk-go
+# easeagent-sdk-php
 
-- [easeagent-sdk-go](#easeagent-sdk-go)
+- [easeagent-sdk-php](#easeagent-sdk-php)
   - [Overview](#overview)
     - [Principles](#principles)
   - [Features](#features)
@@ -11,7 +11,7 @@
     - [4. Server Span](#4-server-span)
   - [Documentation](#documentation)
   - [Example](#example)
-  - [About MegaCloud](#about-megacloud)
+  - [About MegaEase Cloud](#about-megaease-cloud)
   - [Community](#community)
   - [Licenses](#licenses)
 
@@ -21,7 +21,7 @@ A lightweight & opening PHP SDK for Cloud-Native and APM system
 
 - EaseAgent SDK can collect distributed application tracing, which could be used in the APM system and improve the observability of a distributed system. for the tracing, EaseAgent SDK follows the [Google Dapper](https://research.google/pubs/pub36356/) paper. 
 - EaseAgent SDK also can work with Cloud-Native architecture.
-- EaseAgent SDK also can work with [MegaCloud](https://cloud.megaease.com/). For example, it can monitor for service by PHP Docker APP.
+- EaseAgent SDK also can work with [MegaEase Cloud](https://cloud.megaease.com/). For example, it can monitor for service by PHP Docker APP.
 
 ### Principles
 - Safe to PHP application/service.
@@ -72,9 +72,9 @@ $agent->serverReceive(function ($span) use ($agent) {
 ## Example
 Obs. for a more complete router/frontend/backend example, check [this repository](https://github.com/megaease/easeagent-sdk-php-example)
 
-## About MegaCloud 
-1. [Use SDK in MegaCloud](./doc/how-to-use.md)
-2. Get MegaCloud Config. [About MegaCloud Config](./doc/megacloud-config.md)
+## About MegaEase Cloud 
+1. [Use SDK in MegaEase Cloud](./doc/how-to-use.md)
+2. Get MegaEase Cloud Config. [About MegaEase Cloud Config](./doc/megaease-cloud-config.md)
 3. [Decorate the Span](./doc/middleware-span.md). please use api: `Agent.startMiddlewareSpan` for decorate Span.
 
 ## Community
