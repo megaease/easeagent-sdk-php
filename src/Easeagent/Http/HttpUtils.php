@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2022 MegaEase
  * 
@@ -47,10 +48,11 @@ final class HttpUtils
         if ($name !== "") {
             $span->setName($name);
         }
+        // reference https://github.com/openzipkin/zipkin-go/blob/master/middleware/http/client.go#L139
         if ($statusCode < 100 || $statusCode > 399) {
             $span->tag(\Easeagent\Constant\ERROR, strval($statusCode));
         }
-        if ($statusCode < 200 || $statusCode > 299) { // not success code
+        if ($statusCode < 200 || $statusCode > 299) {
             $span->tag(\Easeagent\Constant\HTTP_TAG_STATUS_CODE, strval($statusCode));
         }
         return $span;
@@ -58,8 +60,9 @@ final class HttpUtils
 
     private static function catchAllName(String $method, int $statusCode): string
     {
+        // reference https://github.com/megaease/easeagent/blob/master/plugin-api/src/main/java/com/megaease/easeagent/plugin/tools/trace/HttpUtils.java#L78
         switch ($statusCode) {
-                // from https://tools.ietf.org/html/rfc7231#section-6.4
+            // from https://tools.ietf.org/html/rfc7231#section-6.4
             case 301:
             case 302:
             case 303:
