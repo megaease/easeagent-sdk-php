@@ -20,7 +20,6 @@ There are currently the following configurations.
 | config      | description                      | example             |
 |-------------|----------------------------------|---------------------|
 | serviceName | string, the name of your service | zone.damoin.service |
-| agentType   | string, the sdk agent type       | PHPSDK              |
 
 ## Dedicated configuration
 
