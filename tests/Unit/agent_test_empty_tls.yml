@@ -1,5 +1,5 @@
-service_name: demo.demo.sdk-php-router-service
-tracing_type: log-tracing
+serviceName: demo.demo.sdk-php-router-service
+tracing.type: log-tracing
 tracing.enable: true
 tracing.sample.rate: 0.5
 tracing.shared.spans: true

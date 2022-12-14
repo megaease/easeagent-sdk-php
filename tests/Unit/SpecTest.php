@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * Copyright 2022 MegaEase
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 namespace EaseagentTests\Unit;
 
 use Easeagent\Spec;
@@ -37,7 +54,7 @@ final class SpecTest extends TestCase
     {
         $spec = Spec::loadFromYaml("");
         $this->assertEquals("zone.damoin.service", $spec->serviceName);
-        $spec = Spec::loadFromYaml(__DIR__ . "/agent_test_1.yml");
+        $spec = Spec::loadFromYaml(__DIR__ . "/agent_test_normal.yml");
         $this->assertEquals("demo.demo.sdk-php-router-service", $spec->serviceName);
         $this->assertEquals("log-tracing", $spec->tracingType);
         $this->assertTrue($spec->tracingEnable);
@@ -47,13 +64,13 @@ final class SpecTest extends TestCase
         $this->assertEquals("http://localhost:9411/api/v2/spans", $spec->outputServerUrl);
         $this->assertTrue($spec->enableTls);
         // \Easeagent\Log\Log::getLogger()->addInfo($spec->tlsKey);
-        $this->assertEquals("----------- key -----------\naaaa\n----------- key end -----------\n", $spec->tlsKey);
-        $this->assertEquals("----------- cert -----------\nbbbb\n----------- cert end -----------\n", $spec->tlsCert);
+        $this->assertEquals("----------- key -----------\nkey content\n----------- key end -----------\n", $spec->tlsKey);
+        $this->assertEquals("----------- cert -----------\ncert content\n----------- cert end -----------\n", $spec->tlsCert);
 
-        $spec = Spec::loadFromYaml(__DIR__ . "/agent_test_2.yml");
+        $spec = Spec::loadFromYaml(__DIR__ . "/agent_test_empty_tls.yml");
         $this->assertEquals("demo.demo.sdk-php-router-service", $spec->serviceName);
 
-        $spec = Spec::loadFromYaml(__DIR__ . "/agent_test_3.yml");
+        $spec = Spec::loadFromYaml(__DIR__ . "/agent_test_just_service_name.yml");
         $this->assertEquals("demo.demo.sdk-php-router-service", $spec->serviceName);
         $this->assertEquals("log-tracing", $spec->tracingType);
         $this->assertTrue($spec->tracingEnable);

@@ -1,4 +1,20 @@
 <?php
+/**
+ * Copyright 2022 MegaEase
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 
 namespace EaseagentTests\Unit\Http;
 
@@ -22,25 +38,25 @@ final class HttpUtilsTest extends TestCase
     }
     public function testGetServerPar()
     {
-        self::assertNull(HttpUtils::getServerPar("aaa"));
-        self::assertEquals("bbb", HttpUtils::getServerPar("aaa", "bbb"));
-        $_SERVER["aaa"] = "testValue";
-        self::assertEquals("testValue", HttpUtils::getServerPar("aaa"));
+        self::assertNull(HttpUtils::getServerPar("SERVER_HOST"));
+        self::assertEquals("127.0.0.1", HttpUtils::getServerPar("SERVER_HOST", "127.0.0.1"));
+        $_SERVER["SERVER_HOST"] = "127.0.0.1";
+        self::assertEquals("127.0.0.1", HttpUtils::getServerPar("SERVER_HOST"));
     }
     public function testGetServerParAsInt()
     {
-        self::assertNull(HttpUtils::getServerParAsInt("aaa"));
+        self::assertNull(HttpUtils::getServerParAsInt("PORT"));
         self::assertEquals(12, "12");
-        self::assertEquals(12, HttpUtils::getServerParAsInt("aaa", "12"));
-        $_SERVER["aaa"] = "13";
-        self::assertEquals(13, HttpUtils::getServerParAsInt("aaa"));
+        self::assertEquals(12, HttpUtils::getServerParAsInt("PORT", "12"));
+        $_SERVER["PORT"] = "13";
+        self::assertEquals(13, HttpUtils::getServerParAsInt("PORT"));
     }
 
     public function testGetServerParToupper()
     {
-        self::assertNull(HttpUtils::getServerParToupper("aaa"));
-        self::assertEquals("TEST", HttpUtils::getServerParToupper("aaa", "test"));
-        $_SERVER["aaa"] = "test_value";
-        self::assertEquals("TEST_VALUE", HttpUtils::getServerParToupper("aaa"));
+        self::assertNull(HttpUtils::getServerParToupper("METHOD"));
+        self::assertEquals("GET", HttpUtils::getServerParToupper("METHOD", "get"));
+        $_SERVER["METHOD"] = "post";
+        self::assertEquals("POST", HttpUtils::getServerParToupper("METHOD"));
     }
 }

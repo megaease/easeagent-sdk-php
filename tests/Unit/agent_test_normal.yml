@@ -1,5 +1,5 @@
-service_name: demo.demo.sdk-php-router-service
-tracing_type: log-tracing
+serviceName: demo.demo.sdk-php-router-service
+tracing.type: log-tracing
 tracing.enable: true
 tracing.sample.rate: 0.5
 tracing.shared.spans: true
@@ -8,10 +8,10 @@ reporter.output.server: http://localhost:9411/api/v2/spans
 reporter.output.server.tls.enable: true
 reporter.output.server.tls.key: |
   ----------- key -----------
-  aaaa
+  key content
   ----------- key end -----------
 reporter.output.server.tls.cert: |
   ----------- cert -----------
-  bbbb
+  cert content
   ----------- cert end -----------
   
