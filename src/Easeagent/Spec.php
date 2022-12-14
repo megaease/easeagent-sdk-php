@@ -58,10 +58,10 @@ class Spec
         foreach ($yaml as $key => $val) {
             // echo "key: ".$key." value: ".$val;
             switch ($key) {
-                case "service_name":
+                case "serviceName":
                     $spec->serviceName = $val == null ? "" : $val;
                     break;
-                case "tracing_type":
+                case "tracing.type":
                     $spec->tracingType = $val == null ? "" : $val;
                     break;
                 case "tracing.enable":
