@@ -68,7 +68,7 @@ $agent->serverReceive(function ($span) use ($agent) {
 });
 ```
 ## Documentation
-[APM Tracing API](./doc/tracing-api.md)
+[About Config](./doc/about-config.md)
 ## Example
 Obs. for a more complete router/frontend/backend example, check [this repository](https://github.com/megaease/easeagent-sdk-php-example)
 
