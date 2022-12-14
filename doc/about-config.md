@@ -17,11 +17,10 @@ It is a configuration common to the entire SDK. These public configurations shou
 
 There are currently the following configurations.
 
-| config      | description                           | example             |
-|-------------|---------------------------------------|---------------------|
-| serviceName | string, the name of your service      | zone.damoin.service |
-| address     | string, the sdk api host port address | 127.0.0.1:9900      |
-| agentType   | string, the sdk agent type            | GoSDK               |
+| config      | description                      | example             |
+|-------------|----------------------------------|---------------------|
+| serviceName | string, the name of your service | zone.damoin.service |
+| agentType   | string, the sdk agent type       | PHPSDK              |
 
 ## Dedicated configuration
 
@@ -40,4 +39,3 @@ There are currently the following configurations.
 | reporter.output.server.tls.enable | bool, whether the sending service needs to use tls certificate                  | false                              |
 | reporter.output.server.tls.key    | string, the tls key of the output server                                        |                                    |
 | reporter.output.server.tls.cert   | string, the tls cert of the output server                                       |                                    |
-| reporter.output.server.tls.caCert | string, the tls ca cert of the output server                                    |                                    |

@@ -58,7 +58,11 @@ use Easeagent\AgentBuilder;
 
 ### 3. Init Agent
 ```php
-$agent = AgentBuilder::buildFromYaml('');//by default: Console Reporter
+// new tracing agent from yaml file.
+// If you want to publish the `docker app` through the `cloud of megaease` and send the monitoring data to the `cloud`, 
+// please obtain the configuration file path through the environment variable `EASEAGENT_CONFIG`.
+// We will pass it to you the `cloud configuration` file path.
+$agent = AgentBuilder::buildFromYaml(getenv('EASEAGENT_CONFIG'));//by default: Console Reporter
 ```
 
 ### 4. Server Span
