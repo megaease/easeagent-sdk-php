@@ -13,7 +13,7 @@ $ composer require megaease/easeagent-sdk-php
 ### First: Configuration
 create a yaml file config for your server like this: [agent.yml](./agent.yml)
 
-If you are using `MegaEase Cloud`. Please download the agent.yaml on the front end. `YOUR_SERVCIE_NAME`,`TYPE_OF_TRACING`,`MEGAEASE_CLOUD_URL` and `TLS` will be filled in for you automatically.
+If you are using `MegaEase Cloud`. Please download the agent.yml on the front end. `YOUR_SERVCIE_NAME`,`TYPE_OF_TRACING`,`MEGAEASE_CLOUD_URL` and `TLS` will be filled in for you automatically.
 
 ### Second: Init Agent
 
