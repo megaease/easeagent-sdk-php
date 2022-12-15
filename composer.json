@@ -12,8 +12,7 @@
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "Yufu Deng",
-            "email": "observeralone@gmail.com"
+            "name": "MegaEase"
         }
     ],
     "homepage": "https://github.com/megaease/easeagent-sdk-php",
@@ -52,7 +51,6 @@
             "./src/Easeagent/Constant/Constant.php",
             "./src/Easeagent/Middleware/Type.php",
             "./src/Easeagent/Log/Log.php"
-            
         ]
     },
     "autoload-dev": {
