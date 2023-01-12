@@ -60,12 +60,17 @@ $childSpan->annotate('request_finished', Timestamp\now());
 
 /* Save Request info and finish span */
 HttpUtils::finishSpan($childSpan, $request->getMethod(), $request->getUri()->getPath(), $response->getStatusCode());
+```
 
+We provide an interface so that you can decorate the Span of the middleware, please refer to another [document](./megaease-cloud-config.md) for the reason of decoration.
+
+```php
 // --------------------- mysql client ----------------------
-$mysqlSpan = $agent->startClientSpan($span, 'user:get_list:mysql_query');
+$mysqlSpan = $agent->startMiddlewareSpan($span, 'user:get_list:mysql_query', Type::MySql);
 $childSpan->setRemoteEndpoint(\Zipkin\Endpoint::create("mysql"));
 usleep(50000);
 $mysqlSpan->finish();
 ```
+
 
 Obs. for a more complete router/frontend/backend example, check [this repository](https://github.com/megaease/easeagent-sdk-php-example)
