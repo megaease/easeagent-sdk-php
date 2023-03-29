@@ -11,7 +11,7 @@ $ composer require megaease/easeagent-sdk-php
 
 ## Usage
 ### First: Configuration
-create a yaml file config for your server like this: [agent.yml](./agent.yml)
+create a yaml file config for your server like this: [agent.yml](https://github.com/megaease/easeagent-sdk-php/blob/main/doc/agent.yml)
 
 If you are using `MegaEase Cloud`. Please download the agent.yml on the front end. `YOUR_SERVCIE_NAME`,`TYPE_OF_TRACING`,`MEGAEASE_CLOUD_URL` and `TLS` will be filled in for you automatically.
 
@@ -62,7 +62,7 @@ $childSpan->annotate('request_finished', Timestamp\now());
 HttpUtils::finishSpan($childSpan, $request->getMethod(), $request->getUri()->getPath(), $response->getStatusCode());
 ```
 
-We provide an interface so that you can decorate the Span of the middleware, please refer to another [document](./megaease-cloud-config.md) for the reason of decoration.
+We provide an interface so that you can decorate the Span of the middleware, please refer to another [document](https://github.com/megaease/easeagent-sdk-php/blob/main/doc/megaease-cloud-config.md) for the reason of decoration.
 
 ```php
 // --------------------- mysql client ----------------------
